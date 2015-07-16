@@ -21,8 +21,8 @@ annotation
 getToken(annotation)$word
 getToken(annotation)$sentence
 
-#anno = annotateFile("data/ch09/holmes/01_a_scandal_in_bohemia.txt")
-anno = readRDS("data/ch09/holmes_anno/01_a_scandal_in_bohemia.Rds")
+#anno = annotateFile("../data/ch09/holmes/01_a_scandal_in_bohemia.txt")
+anno = readRDS("../data/ch09/holmes_anno/01_a_scandal_in_bohemia.Rds")
 
 sentLen = table(getToken(anno)$sentence)
 
@@ -167,7 +167,7 @@ charImport
 # Case study
 
 output = c()
-for (f in dir("data/ch09/holmes_anno",full.names=TRUE)) {
+for (f in dir("../data/ch09/holmes_anno",full.names=TRUE)) {
   #anno = annotateFile(file=f)
   anno = readRDS(f)
   token = getToken(anno)
@@ -177,8 +177,8 @@ for (f in dir("data/ch09/holmes_anno",full.names=TRUE)) {
 }
 
 # Annotate all, for easy of use, sherlock holmes texts:
-dir.create("data/ch09/holmes_anno",showWarnings=FALSE)
-for (f in dir("data/ch09/holmes",full.names=TRUE)) {
+dir.create("../data/ch09/holmes_anno",showWarnings=FALSE)
+for (f in dir("../data/ch09/holmes",full.names=TRUE)) {
   fout = gsub("\\.txt", ".Rds", gsub("/holmes/", "/holmes_anno/", f))
   obj = annotateFile(file=f)
   saveRDS(obj, fout)
@@ -188,7 +188,7 @@ for (f in dir("data/ch09/holmes",full.names=TRUE)) {
 output = c()
 outputGraphics = list()
 iter = 1
-for (f in dir("data/ch09/holmes_anno",full.names=TRUE)) {
+for (f in dir("../data/ch09/holmes_anno",full.names=TRUE)) {
   anno = readRDS(f)
   token = getToken(anno)
   dep = getDependency(anno)
@@ -285,8 +285,7 @@ strIn = paste(strIn, collapse=" ")
 
 annoEn = annotateString(strIn)
 
-initCoreNLP(libLoc="~/files/stanford-corenlp-full-2015-01-29/",
-            parameterFile="~/Desktop/french.properties")
+initCoreNLP(parameterFile="~/Desktop/french.properties")
 annoFr = annotateString(strIn)
 getToken(annoFr)$token
 
