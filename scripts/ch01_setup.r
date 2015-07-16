@@ -1,7 +1,7 @@
 # Load libraries
 
 OUTDIR = "../img/ch03/"
-dir.create(OUTDIR, FALSE)
+dir.create(OUTDIR, FALSE, TRUE)
 
 ############### tables
 geodf = read.csv("../data/ch03/geodf.csv", as.is=TRUE)
