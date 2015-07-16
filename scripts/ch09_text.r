@@ -1,6 +1,6 @@
 # Load libraries
 library(coreNLP)
-initCoreNLP("~/files/stanford-corenlp-full-2015-01-29")
+initCoreNLP() # change this if downloaded to non-standard location
 
 OUTDIR = "../book/img/ch09/"
 dir.create(OUTDIR, FALSE)
