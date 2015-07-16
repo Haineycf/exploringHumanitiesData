@@ -6,7 +6,7 @@ git users may download via the normal methods.
 The following files need to be unzipped prior to proceeding through the relevant
 chapters:
 
- - photoDatasetAllRaw.csv.zip
+ - data/ch07/photoDatasetAllRaw.csv.zip
  - data/ch08/columbiaImages.zip
  - data/ch09/holmes_anno.zip
  - data/ch10/gutenbergClean_annotations.zip
