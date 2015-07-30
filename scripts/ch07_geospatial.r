@@ -3,14 +3,15 @@ library(sp)
 library(maptools)
 library(snippets)
 library(rgdal)
+library(rgeos)
 
-OUTDIR = "../book/img/ch07/"
+OUTDIR = "../img/ch07/"
 dir.create(OUTDIR, FALSE)
 options(width=70)
 
 #############################################
 # Berlin border crossing
-berlin = read.csv("data/ch07/berlinBorderCrossing.csv", as.is=TRUE)
+berlin = read.csv("../data/ch07/berlinBorderCrossing.csv", as.is=TRUE)
 cityCenterId = c(1:6,8)
 
 pdf(paste0(OUTDIR, "berlinBorderCrossingPlain.pdf"), 8, 4)
@@ -110,7 +111,7 @@ dev.off()
 #############################################
 # Read in state file and create four simple plots
 projectionObj = CRS(projargs="+proj=longlat")
-state = readShapeSpatial(fn="data/ch07/State_2010Census_DP1.shp",
+state = readShapeSpatial(fn="../data/ch07/State_2010Census_DP1/State_2010Census_DP1",
   proj4string=projectionObj)
 
 state = state[-which(state@data$STUSPS10 %in% c("AK", "HI")),]
@@ -149,7 +150,7 @@ dev.off()
 
 #############################################
 # Read in photogrammar data and make a simple
-z = read.csv(file="data/ch07/photoDatasetAllRaw.csv", as.is=TRUE)
+z = read.csv(file="../data/ch07/photoDatasetAllRaw.csv", as.is=TRUE)
 z = z[,c("cnumber2","pname","year","longitude","latitude")]
 names(z)[1] = "cnumber"
 z = z[!is.na(z$latitude) & !is.na(z$longitude) & !is.na(z$pname),]
@@ -158,7 +159,7 @@ z = z[z$pname %in% pnameSet,]
 head(z)
 
 pts = SpatialPointsDataFrame(cbind(z$longitude, z$latitude), z)
-cnty = readShapeSpatial("data/ch07/County_2010Census_DP1.shp")
+cnty = readShapeSpatial("../data/ch07/County_2010Census_DP1/County_2010Census_DP1")
 
 joinedDataF = pts %over% cnty
 
@@ -180,18 +181,18 @@ dev.off()
 # Aggregate photogrammar counts over counties; look at different ways
 # to plot this; smooth?
 projection = CRS("+proj=longlat")
-z = read.csv("data/ch07/photoDatasetAllRaw.csv", as.is=TRUE)
+z = read.csv("../data/ch07/photoDatasetAllRaw.csv", as.is=TRUE)
 z = z[!is.na(z$latitude) & !is.na(z$longitude),]
 pts = SpatialPointsDataFrame(cbind(z$longitude, z$latitude), z, proj4string=projection)
-cnty = readShapeSpatial("data/ch07/County_2010Census_DP1.shp", proj4string=projection)
-state = readShapeSpatial("data/ch07/State_2010Census_DP1.shp", proj4string=projection)
+cnty = readShapeSpatial("../data/ch07/County_2010Census_DP1/County_2010Census_DP1", proj4string=projection)
+state = readShapeSpatial("../data/ch07/State_2010Census_DP1/State_2010Census_DP1", proj4string=projection)
 centroidC = gCentroid(cnty, byid=TRUE)
 centroidS = gCentroid(state, byid=TRUE)
 state = state[centroidS$x > -79.3 & centroidS$x < -71 & centroidS$y > 37 & centroidS$y < 44,]
 cnty$GEOID10 = as.character(cnty$GEOID10)
 
 matchIndex = cnty %over% state
-cnty = cnty[!is.na(matchIndex),]
+cnty = cnty[!is.na(matchIndex$GEOID10),]
 
 x = over(pts,cnty)
 tab = table(x$GEOID10)

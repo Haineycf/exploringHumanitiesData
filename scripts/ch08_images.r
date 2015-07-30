@@ -1,15 +1,14 @@
 # Load libraries
 library(jpeg)
 library(abind)
-#library(glcm)
 options(width=70)
 
-OUTDIR = "../book/img/ch08/"
+OUTDIR = "../img/ch08/"
 dir.create(OUTDIR,FALSE)
 
 #####################
 # Simple manipulation examples
-vanGogh = readJPEG("data/ch08/vanGogh_selfPortrait.jpg")
+vanGogh = readJPEG("../data/ch08/vanGogh_selfPortrait.jpg")
 
 dim(vanGogh)
 range(vanGogh)
@@ -43,8 +42,8 @@ writeJPEG(vanGoghAll,paste0(OUTDIR,"vanGoghAll.jpg"))
 
 #####################
 # Indoor/Outdoor Corpus
-files = dir("../raw_data/columbiaImages", full.names=TRUE)
-meta = read.csv("../raw_data/photoMetaData.csv", as.is=TRUE)
+files = dir("../data/ch08/columbiaImages", full.names=TRUE)
+meta = read.csv("../data/ch08/photoMetaData.csv", as.is=TRUE)
 
 files = files[meta$category %in% c("outdoor-night","outdoor-day")]
 meta = meta[meta$category %in% c("outdoor-night","outdoor-day"),]
@@ -127,9 +126,6 @@ axis(2)
 axis(1,at=rgb2hsv(col2rgb(c("red","orange","yellow","green","cyan","blue","violet","purple")))[1,],
        label=c("red","orange","yellow","green","cyan","blue","violet","purple"),las=2)
 dev.off()
-
-plot(output[,1],output[,2],pch=pchSymb,cex=0.7,col=colType,xlab="hue",ylab="saturation")
-text(10*,0.8,c("red","orange","yellow","green","blue","violet","purple"),srt=90)
 
 #####################
 # PCA
@@ -231,7 +227,7 @@ table(cluster$cluster,meta$category)
 
 index = which(cluster$cluster == 4 & meta$category =="outdoor-day")
 
-centers = predict(pc, cluster$centers)
+centers = predict(pc9, cluster$centers)
 
 pdf(paste0(OUTDIR, "clusterScatter.pdf"), 5, 5)
 plot(outputPC9[,1],outputPC9[,2],pch=pchSymb,cex=0.7,col=colType,xlab="PC1",ylab="PC2")
@@ -276,71 +272,4 @@ for (j in sample(1:length(files))) {
   rect(x[j],y[j],x[j]+delta_x,y[j]+delta_y,lwd=2)
 }
 dev.off()
-
-#####################
-# Texture
-# x = readJPEG("~/files/rbook/code/data/ch08/vanGogh_selfPortrait.jpg")
-# x = 0.21 * x[,,1] + 0.72 * x[,,2] + 0.07 * x[,,3]
-
-# tex = glcm(x,window=c(7,7))
-# for (j in 1:8) {
-#   tex[,,j] = tex[,,j] - min(tex[,,j],na.rm=TRUE)
-#   tex[,,j] = tex[,,j] / max(tex[,,j], na.rm=TRUE)
-# }
-
-# z= abind(
-#     abind(tex[,,1],tex[,,2],tex[,,3],along=2),
-#     abind(tex[,,4],tex[,,5],tex[,,6],along=2),
-#     abind(tex[,,7],tex[,,8],x,along=2),along=1)
-
-# writeJPEG(z,paste0(OUTDIR,"vanGoghTexture.jpg"))
-
-# tex2 = abind(tex, vanGogh)
-# mat = matrix(as.numeric(tex2),ncol=11)
-# mat = scale(mat)
-# index = apply(is.na(mat),1,sum) == 0
-
-# set.seed(7)
-# ids = rep(0,nrow(mat))
-# ids[index] = kmeans(mat[index,],centers=4)$cluster
-
-# output = NULL
-# for (j in 1:6) {
-#   gvals = rep(1,length(ids))
-#   gvals[ids == j] = 0.3
-#   gvals = matrix(gvals, nrow=dim(tex)[1], ncol=dim(tex)[2])
-#   gvals[nrow(gvals),] = gvals[,1] = 0
-#   gvals[,ncol(gvals)] = gvals[,1] = 0
-#   output = cbind(output,gvals)
-# }
-
-# writeJPEG(output,paste0(OUTDIR,"vanGoghTextureClusters.jpg"))
-
-# vanGogh = readJPEG("data/ch08/vanGogh_selfPortrait.jpg")
-# vanGoghNM = as.numeric(vanGogh)
-
-# output = NULL
-# for (j in 1:4) {
-#   gvals = vanGoghNM
-#   gvals[ids != j] = 1
-#   gvals = array(gvals, dim=dim(vanGogh))
-#   output = abind(output,gvals,along=2L)
-# }
-
-# writeJPEG(output,paste0(OUTDIR,"vanGoghTextureClusters.jpg"))
-
-
-
-# tex = array(data=NA,dim=c(dim(x),8))
-# for (j in 1:3) tex[,,j] = glcm(x,statistics="mean",shift=c(j*3,j*3))
-# z = abind(tex[,,1],tex[,,2],tex[,,3],along=2)
-
-# writeJPEG(z,paste0(OUTDIR,"vanGoghTextureMean.jpg"))
-
-# tex = array(data=NA,dim=c(dim(x),8))
-# for (j in 1:3) tex[,,j] = glcm(x,statistics="dissimilarity",window=c(j*4+1,j*4+1))
-# z = abind(tex[,,1],tex[,,2],tex[,,3],along=2)
-
-# writeJPEG(z,paste0(OUTDIR,"vanGoghTextureDissimilarity.jpg"))
-
 

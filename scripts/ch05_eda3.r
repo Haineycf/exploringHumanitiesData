@@ -1,7 +1,7 @@
 # Load libraries
 library(colorspace)
 
-OUTDIR = "../book/img/ch05/"
+OUTDIR = "../img/ch05/"
 dir.create(OUTDIR, FALSE)
 options(width=70)
 
@@ -21,7 +21,8 @@ options(width=70)
 # CHEMINADE (SP) - Jacques Cheminade - Solidarity and Progress (Solidarité et Progrès)
 
 ################# box plot
-lengthOfCommute = read.csv("data/ch03/lengthOfCommute.csv",as.is=TRUE,check.names=FALSE)
+geodf = read.csv("../data/ch03/geodf.csv", as.is=TRUE)
+lengthOfCommute = read.csv("../data/ch03/lengthOfCommute.csv",as.is=TRUE,check.names=FALSE)
 lengthOfCommute = as.matrix(lengthOfCommute)
 
 longCommute = lengthOfCommute[,"45m"] + lengthOfCommute[,"60m"] +
@@ -32,7 +33,7 @@ pdf(paste0(OUTDIR, "boxplotBasic.pdf"), 10, 5)
 boxplot(longCommutePerc ~ geodf$county)
 dev.off()
 
-out = boxplot(longCommutePerc ~ geodf$county)
+out = boxplot(longCommutePerc ~ geodf$county, plot=FALSE)
 medians = out$stats[3,]
 
 factorLevels = out$names[order(medians)]
@@ -45,7 +46,7 @@ dev.off()
 
 ############### scatter
 
-election = read.csv("../raw_data/france_election_2012.csv",
+election = read.csv("../data/ch05/france_election_2012.csv",
                     as.is=TRUE)
 election[1:5,]
 

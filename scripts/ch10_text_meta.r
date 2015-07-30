@@ -1,15 +1,14 @@
 # Load libraries
 library(mallet)
 library(coreNLP)
-#initCoreNLP("~/files/stanford-corenlp-full-2015-01-29/")
 
-OUTDIR = "../book/img/ch10/"
+OUTDIR = "../img/ch10/"
 dir.create(OUTDIR, FALSE)
 options(width=70)
 
 #########################
 # TF-IDF
-wikiFiles = dir("data/ch10/wiki_annotations/", full.names=TRUE)
+wikiFiles = dir("../data/ch10/wiki_annotations/", full.names=TRUE)
 wikiNames = gsub("\\.Rds", "", basename(wikiFiles))
 
 lemmas = c()
@@ -103,7 +102,7 @@ vocab = tm$getVocabulary()
 #tmSaved = list(topics=topics,words=words,vocab=vocab)
 #saveRDS(tmSaved, "~/Desktop/tm.Rds")
 
-tm = readRDS("../raw_data/tm.Rds")
+tm = readRDS("../data/ch10/tm.Rds")
 topics = tm$topics
 words = tm$words
 vocab = tm$vocab
@@ -137,8 +136,6 @@ text(1:ncol(mat), -0.75, topicNames, adj=c(0.5,0),cex=0.7,srt=60)
 dev.off()
 
 colnames(topics) = topicNames
-M = cor(topics)
-corrplot(M, method = "circle",diag=FALSE,order="AOE",type = "lower")
 
 pdf(paste0(OUTDIR, "documentTopicDistro.pdf"), 6, 8.5)
 par(mfrow=c(1,3))
@@ -199,28 +196,12 @@ gutenFiles = c("pg76.Rds", "pg74.Rds", "pg1837.Rds", "pg102.Rds", "pg7193.Rds",
                 "pg2081.Rds", "pg976.Rds", "pg9255.Rds", "pg513.Rds", "pg2852.Rds",
                 "pg244.Rds", "pg2097.Rds", "pg3289.Rds", "pg139.Rds", "pg126.Rds",
                 "pg7964.Rds")
-gutenFiles = paste0("data/ch10/gutenbergClean_annotations/", gutenFiles)
+gutenFiles = paste0("../data/ch10/gutenbergClean_annotations/", gutenFiles)
 
 gutenNames = auth = c(rep("Mark Twain",5),rep("Charles Dickens",7),
         rep("Nathaniel Hawthorne",7),rep("Sir Arthur Conan Doyle",7))
 cols = c(rep("#DB9D85",5),rep("#86B875",7),rep("#4CB9CC",7),
          rep("#CD99D8",7))
-
-# pos1gram = matrix(0L,nrow=length(gutenFiles),ncol=12L)
-# rownames(pos1gram) = gutenNames
-# colnames(pos1gram) = utPos
-
-# for (j in 1:length(gutenFiles)) {
-#   anno = readRDS(gutenFiles[j])
-#   ut = universalTagset(getToken(anno)$POS)
-#   tab = table(ut)
-#   index = match(colnames(pos1gram),names(tab))
-#   pos1gram[j,!is.na(index)] = tab[index[!is.na(index)]] / sum(tab[index[!is.na(index)]])
-# }
-
-# pc = prcomp(pos1gram)
-# posNgramPC = scale(pos1gram, center=pc$center, scale=pc$scale) %*% pc$rotation
-# plot(posNgramPC[,1],posNgramPC[,2])
 
 utPos = c(".", "CONJ", "NUM", "X", "DET", "ADP", "ADJ", "VERB", "NOUN",
           "PRT", "PRON", "ADV")

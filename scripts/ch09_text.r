@@ -2,7 +2,7 @@
 library(coreNLP)
 initCoreNLP() # change this if downloaded to non-standard location
 
-OUTDIR = "../book/img/ch09/"
+OUTDIR = "../img/ch09/"
 dir.create(OUTDIR, FALSE)
 options(width=70)
 
@@ -274,23 +274,3 @@ rect(0.995,-100,100,100,bg="white",density=NA,col="white")
 text(-.015,1:56,sprintf("%02d",56:1),cex=0.5)
 box()
 dev.off()
-
-
-#########################################
-# Languages
-
-strIn = c("Aujourd'hui, maman est morte. Ou peut-être hier,",
-          "je ne sais pas. J'ai reçu un télégramme de l'asile.")
-strIn = paste(strIn, collapse=" ")
-
-annoEn = annotateString(strIn)
-
-initCoreNLP(parameterFile="~/Desktop/french.properties")
-annoFr = annotateString(strIn)
-getToken(annoFr)$token
-
-
-
-
-
-

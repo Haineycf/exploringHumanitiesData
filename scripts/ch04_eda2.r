@@ -1,27 +1,27 @@
 # Load libraries
 
-OUTDIR = "../book/img/ch04/"
+OUTDIR = "../img/ch04/"
 dir.create(OUTDIR, FALSE)
 options(width=70)
 
 ############### copy from last time
 
-lengthOfCommute = read.csv("data/ch03/lengthOfCommute.csv",as.is=TRUE,check.names=FALSE)
+lengthOfCommute = read.csv("../data/ch03/lengthOfCommute.csv",as.is=TRUE,check.names=FALSE)
 lengthOfCommute = as.matrix(lengthOfCommute)
 longCommute = lengthOfCommute[,"45m"] + lengthOfCommute[,"60m"] +
               lengthOfCommute[,"90m"]
 longCommutePerc = longCommute / lengthOfCommute[,"total"]
-hhIncome = read.csv("data/ch03/hhIncome.csv",as.is=TRUE, check.names=FALSE)
+hhIncome = read.csv("../data/ch03/hhIncome.csv",as.is=TRUE, check.names=FALSE)
 hhIncome = as.matrix(hhIncome)
 cumIncome = t(apply(hhIncome[,-1],1,cumsum)) / hhIncome[,1]
-meansOfCommute = read.csv("data/ch03/meansOfCommute.csv",as.is=TRUE,check.names=FALSE)
+meansOfCommute = read.csv("../data/ch03/meansOfCommute.csv",as.is=TRUE,check.names=FALSE)
 meansOfCommute = as.matrix(meansOfCommute)
 walkPerc = meansOfCommute[,"walk"] / meansOfCommute[,"total"]
 carPerc = meansOfCommute[,"car"] / meansOfCommute[,"total"]
 bikePerc = meansOfCommute[,"bike"] / meansOfCommute[,"total"]
 
 ############### scatter
-geodf = read.csv("data/ch03/geodf.csv", as.is=TRUE)
+geodf = read.csv("../data/ch03/geodf.csv", as.is=TRUE)
 
 pdf(paste0(OUTDIR, "simpleScatter.pdf"), 5, 5)
 plot(geodf$households, geodf$population)
@@ -102,7 +102,7 @@ dev.off()
 
 
 ############### line plot
-timeOfCommute = read.csv("data/ch03/timeOfCommute.csv",
+timeOfCommute = read.csv("../data/ch04/timeOfCommute.csv",
                          as.is=TRUE,check.names=FALSE)
 timeOfCommute = as.matrix(timeOfCommute)
 timeOfCommute[,-1] = timeOfCommute[,-1] / timeOfCommute[,1]

@@ -3,7 +3,7 @@ library(igraph)
 library(RColorBrewer)
 options(width=70)
 
-OUTDIR = "../book/img/ch06/"
+OUTDIR = "../img/ch06/"
 dir.create(OUTDIR,FALSE)
 
 # Simple example with the British Monarchy
@@ -43,8 +43,8 @@ dev.off()
 
 # Read in the Supreme court data and create a simple graph
 options(stringsAsFactors=FALSE)
-allCounts = as.matrix(read.csv("data/ch06/ac.csv"))
-themes = read.csv("data/ch06/themes.csv")
+allCounts = as.matrix(read.csv("../data/ch06/ac.csv"))
+themes = read.csv("../data/ch06/themes.csv")
 
 G = graph.edgelist(allCounts, directed=FALSE)
 
