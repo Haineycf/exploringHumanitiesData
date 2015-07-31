@@ -110,9 +110,6 @@ timeOfCommute[1:5,]
 
 numericTimes = c(5,5.5,6,6.5,7,7.5,8,8.5,9,10,11,12,16,24)
 
-plot(numericTimes, timeOfCommute[1,-1])
-lines(numericTimes, timeOfCommute[1,-1])
-
 pdf(paste0(OUTDIR, "simpleLinePlot.pdf"), 8, 5)
 plot(numericTimes, timeOfCommute[1,-1], axes=TRUE,
      xlab="time", ylab="percentage")

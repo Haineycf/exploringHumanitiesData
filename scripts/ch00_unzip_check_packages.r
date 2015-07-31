@@ -5,7 +5,7 @@ if(!("ch00_unzip_check_packages.r" %in% dir()))
        "working directory set to the same location as",
        "scripts")
 
-unzip("../data/ch07/State_2010Census_DP1.zip", exdir="../data/ch07")
+unzip("../data/ch07/photoDatasetAllRaw.csv.zip", exdir="../data/ch07")
 unzip("../data/ch07/County_2010Census_DP1.zip", exdir="../data/ch07")
 unzip("../data/ch08/columbiaImages.zip", exdir="../data/ch08")
 unzip("../data/ch09/holmes_anno.zip", exdir="../data/ch09")
@@ -27,5 +27,6 @@ x = require("abind") &
 
 if (x)
   print("All required packages available!")
-else
+
+if (!x)
   print("Some packages need to be installed (though you may do these chapter by chapter)")

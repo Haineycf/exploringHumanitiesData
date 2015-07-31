@@ -1,6 +1,6 @@
 ## Load libraries
 
-OUTDIR = "mydata"
+OUTDIR = "../img/ch02"
 dir.create(OUTDIR, FALSE)
 
 ## A Short Introduction to R
@@ -190,14 +190,14 @@ class(fruitData)
 
 class(fruitData$Juice)
 
-write.csv(x=fruitData$Juice,file="fruitDataJuice.csv")
+write.csv(x=fruitData$Juice,file="../data/ch02/fruitDataJuice.csv")
 
-fruitDataJuice <- read.csv(file="fruitDataJuice.csv")
+fruitDataJuice <- read.csv(file="../data/ch02/fruitDataJuice.csv")
 class(fruitDataJuice)
 
-saveRDS(object=fruitData$Juice, file="fruitDataJuice.rds")
+saveRDS(object=fruitData$Juice, file="../data/ch02/fruitDataJuice.rds")
 
-fruitDataJuice <- readRDS(file="fruitDataJuice.rds")
+fruitDataJuice <- readRDS(file="../data/ch02/fruitDataJuice.rds")
 class(fruitDataJuice)
 
 fruitDataJuice

@@ -159,7 +159,7 @@ z = z[z$pname %in% pnameSet,]
 head(z)
 
 pts = SpatialPointsDataFrame(cbind(z$longitude, z$latitude), z)
-cnty = readShapeSpatial("../data/ch07/County_2010Census_DP1/County_2010Census_DP1")
+cnty = readShapeSpatial("../data/ch07/County_2010Census_DP1")
 
 joinedDataF = pts %over% cnty
 
@@ -184,7 +184,7 @@ projection = CRS("+proj=longlat")
 z = read.csv("../data/ch07/photoDatasetAllRaw.csv", as.is=TRUE)
 z = z[!is.na(z$latitude) & !is.na(z$longitude),]
 pts = SpatialPointsDataFrame(cbind(z$longitude, z$latitude), z, proj4string=projection)
-cnty = readShapeSpatial("../data/ch07/County_2010Census_DP1/County_2010Census_DP1", proj4string=projection)
+cnty = readShapeSpatial("../data/ch07/County_2010Census_DP1", proj4string=projection)
 state = readShapeSpatial("../data/ch07/State_2010Census_DP1/State_2010Census_DP1", proj4string=projection)
 centroidC = gCentroid(cnty, byid=TRUE)
 centroidS = gCentroid(state, byid=TRUE)
